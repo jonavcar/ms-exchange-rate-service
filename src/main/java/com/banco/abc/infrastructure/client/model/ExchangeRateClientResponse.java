@@ -1,19 +1,18 @@
-package com.banco.abc.domain.model;
+package com.banco.abc.infrastructure.client.model;
 
 /**
  * =============================================================
- * Class: ExchangeRate
+ * Class: ExchangeRateClientResponse
  * Author: Joaquin Navarro C.
  * Date: 2025-10-05
  * -------------------------------------------------------------
  * Project: Exchange Rate Service microservice for Banco ABC
  * -------------------------------------------------------------
  * Description:
- * Modelo de dominio para el tipo de cambio
+ * REST client response model for exchange rate data from external API.
  * =============================================================
  */
-
-public record ExchangeRate(
+public record ExchangeRateClientResponse(
     String fecha,
     Double sunat,
     Double compra,

@@ -1,22 +1,22 @@
-package com.banco.abc.domain.model;
+package com.banco.abc.application.dto;
 
 /**
  * =============================================================
- * Class: ExchangeRate
+ * Class: ExchangeRateApplicationDto
  * Author: Joaquin Navarro C.
  * Date: 2025-10-05
  * -------------------------------------------------------------
  * Project: Exchange Rate Service microservice for Banco ABC
  * -------------------------------------------------------------
  * Description:
- * Modelo de dominio para el tipo de cambio
+ * DTO específico de la capa de aplicación para manejar datos
+ * de tipos de cambio entre capas de la aplicación.
  * =============================================================
  */
-
-public record ExchangeRate(
+public record ExchangeRateApplicationDto(
     String fecha,
-    Double sunat,
-    Double compra,
-    Double venta
+    Double tasaSunat,
+    Double tasaCompra,
+    Double tasaVenta
 ) {
 }
