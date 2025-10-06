@@ -1,6 +1,8 @@
 package com.banco.abc.exchangerate.persistence;
 
 import com.banco.abc.exchangerate.model.QueryRecord;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -22,13 +24,13 @@ public interface QueryRepository {
    * @param date query date
    * @return number of queries found
    */
-  long countQueriesByDniAndDate(String dni, String date);
+  long countQueriesByDniAndDate(String dni, LocalDate date);
 
   /**
    * Finds all query records for a specific DNI.
    *
    * @param dni user identification
-   * @return list of query records
+   * @return list of query records ordered by date descending
    */
   List<QueryRecord> findByDni(String dni);
 
@@ -41,5 +43,15 @@ public interface QueryRepository {
    * @param buyRate   purchase exchange rate
    * @param sellRate  selling exchange rate
    */
-  void saveQuery(String dni, String date, Double sunatRate, Double buyRate, Double sellRate);
+  void saveQuery(String dni, LocalDate date, BigDecimal sunatRate,
+                 BigDecimal buyRate, BigDecimal sellRate);
+
+  /**
+   * Deletes old query records for data retention compliance.
+   * Batch operation for efficient cleanup of historical data.
+   *
+   * @param cutoffDate records older than this date will be deleted
+   * @return number of deleted records
+   */
+  long deleteOldRecords(LocalDate cutoffDate);
 }

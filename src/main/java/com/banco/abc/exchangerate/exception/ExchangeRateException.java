@@ -35,7 +35,7 @@ public class ExchangeRateException extends WebApplicationException {
    */
   public static ExchangeRateException limitExceeded(int limit) {
     return new ExchangeRateException(
-        String.format("You have exceeded the limit of %d daily queries.", limit),
+        String.format("Has excedido el limite de %d consultas diarias.", limit),
         Response.Status.TOO_MANY_REQUESTS
     );
   }
@@ -48,7 +48,7 @@ public class ExchangeRateException extends WebApplicationException {
    */
   public static ExchangeRateException externalApiError(String message) {
     return new ExchangeRateException(
-        String.format("Error querying exchange rate: %s", message),
+        String.format("Error consultando tipo de cambio: %s", message),
         Response.Status.SERVICE_UNAVAILABLE
     );
   }

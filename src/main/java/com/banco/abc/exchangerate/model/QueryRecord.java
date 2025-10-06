@@ -3,7 +3,10 @@ package com.banco.abc.exchangerate.model;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Index;
 import jakarta.persistence.Table;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 
 /**
  * QueryRecord
@@ -16,29 +19,44 @@ import jakarta.persistence.Table;
  */
 
 @Entity
-@Table(name = "exchange_rate_queries")
+@Table(name = "exchange_rate_queries", indexes = {
+    @Index(name = "idx_dni_date", columnList = "dni, query_date"),
+    @Index(name = "idx_query_date", columnList = "query_date")
+})
 public class QueryRecord extends PanacheEntity {
 
-  @Column(name = "dni", nullable = false)
+  @Column(name = "dni", nullable = false, length = 8)
   private String dni;
 
   @Column(name = "query_date", nullable = false)
-  private String queryDate;
+  private LocalDate queryDate;
 
-  @Column(name = "sunat_rate")
-  private Double sunatRate;
+  @Column(name = "sunat_rate", precision = 10, scale = 4)
+  private BigDecimal sunatRate;
 
-  @Column(name = "buy_rate")
-  private Double buyRate;
+  @Column(name = "buy_rate", precision = 10, scale = 4)
+  private BigDecimal buyRate;
 
-  @Column(name = "sell_rate")
-  private Double sellRate;
+  @Column(name = "sell_rate", precision = 10, scale = 4)
+  private BigDecimal sellRate;
 
+  /**
+   * Default constructor for JPA.
+   */
   public QueryRecord() {
   }
 
-  public QueryRecord(String dni, String queryDate, Double sunatRate, Double buyRate,
-                     Double sellRate) {
+  /**
+   * Constructor to initialize all fields.
+   *
+   * @param dni       user identification
+   * @param queryDate date of the query
+   * @param sunatRate SUNAT exchange rate
+   * @param buyRate   purchase exchange rate
+   * @param sellRate  selling exchange rate
+   */
+  public QueryRecord(String dni, LocalDate queryDate, BigDecimal sunatRate, BigDecimal buyRate,
+                     BigDecimal sellRate) {
     this.dni = dni;
     this.queryDate = queryDate;
     this.sunatRate = sunatRate;
@@ -46,44 +64,24 @@ public class QueryRecord extends PanacheEntity {
     this.sellRate = sellRate;
   }
 
-  // Getters and Setters
+  // Getters necesarios para JPA y acceso de datos
   public String getDni() {
     return dni;
   }
 
-  public void setDni(String dni) {
-    this.dni = dni;
-  }
-
-  public String getQueryDate() {
+  public LocalDate getQueryDate() {
     return queryDate;
   }
 
-  public void setQueryDate(String queryDate) {
-    this.queryDate = queryDate;
-  }
-
-  public Double getSunatRate() {
+  public BigDecimal getSunatRate() {
     return sunatRate;
   }
 
-  public void setSunatRate(Double sunatRate) {
-    this.sunatRate = sunatRate;
-  }
-
-  public Double getBuyRate() {
+  public BigDecimal getBuyRate() {
     return buyRate;
   }
 
-  public void setBuyRate(Double buyRate) {
-    this.buyRate = buyRate;
-  }
-
-  public Double getSellRate() {
+  public BigDecimal getSellRate() {
     return sellRate;
-  }
-
-  public void setSellRate(Double sellRate) {
-    this.sellRate = sellRate;
   }
 }
